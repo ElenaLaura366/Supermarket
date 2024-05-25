@@ -1,0 +1,104 @@
+﻿<Window x:Class="Supermarket.Views.UserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Supermarket.Views"
+        mc:Ignorable="d"
+        Title="Users" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+            <TextBlock Text="Add User" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Name:" Target="{Binding ElementName=txtUser}" FontSize="16"/>
+                <TextBox Name="txtUser" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Password:" Target="{Binding ElementName=txtPassword}" FontSize="16"/>
+                <TextBox Name="txtPassword" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+            </StackPanel>
+            <Button Content="ADD" Width="50" Height="30"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+            <TextBlock Text="Edit User" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Name:" Target="{Binding ElementName=txtUserEdit}" FontSize="16"/>
+                <TextBox Name="txtUserEdit" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Password:" Target="{Binding ElementName=txtPasswordEdit}" FontSize="16"/>
+                <TextBox Name="txtPasswordEdit" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+            </StackPanel>
+            <Button Content="EDIT" Width="50" Height="30"/>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+            <TextBlock Text="Delete User" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Name:" Target="{Binding ElementName=txtUserDelete}" FontSize="16"/>
+                <TextBox Name="txtUserDelete" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+            </StackPanel>
+            <Button Content="DELETE" Width="50" Height="30"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+            <TextBlock Text="View User" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <ListView Grid.Column="1" Grid.Row="1" Width="400" Height="200" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListViewItem>
+                    <StackPanel>
+                        <TextBlock Text="User 1" FontSize="14"/>
+                        <TextBlock Text="$10.00" FontSize="14"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <StackPanel>
+                        <TextBlock Text="User 2" FontSize="14"/>
+                        <TextBlock Text="$15.00" FontSize="14"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <StackPanel>
+                        <TextBlock Text="User 3" FontSize="14"/>
+                        <TextBlock Text="$20.00" FontSize="14"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <StackPanel>
+                        <TextBlock Text="User 3" FontSize="14"/>
+                        <TextBlock Text="$20.00" FontSize="14"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <StackPanel>
+                        <TextBlock Text="User 3" FontSize="14"/>
+                        <TextBlock Text="$20.00" FontSize="14"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <StackPanel>
+                        <TextBlock Text="User 3" FontSize="14"/>
+                        <TextBlock Text="$20.00" FontSize="14"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem>
+                    <StackPanel>
+                        <TextBlock Text="User 3" FontSize="14"/>
+                        <TextBlock Text="$20.00" FontSize="14"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>

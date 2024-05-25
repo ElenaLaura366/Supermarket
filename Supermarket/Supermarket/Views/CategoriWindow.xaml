@@ -1,0 +1,57 @@
+﻿<Window x:Class="Supermarket.Views.CategoriWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Supermarket.Views"
+        mc:Ignorable="d"
+        Title="Categoris" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Add Category Section -->
+        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+            <TextBlock Text="Add Category" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Name:" FontSize="16"/>
+                <TextBox Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+            </StackPanel>
+            <Button Content="ADD" Command="{Binding AddCategoryCommand}" Width="50" Height="30"/>
+        </StackPanel>
+
+        <!-- Edit Category Section -->
+        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+            <TextBlock Text="Edit Category" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" Width="250" Margin="0,5" FontSize="16"/>
+            <TextBox Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+            <Button Content="EDIT" Command="{Binding EditCategoryCommand}" Width="50" Height="30"/>
+        </StackPanel>
+
+        <!-- Delete Category Section -->
+        <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+            <TextBlock Text="Delete Category" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" Width="250" Margin="0,5" FontSize="16"/>
+            <Button Content="DELETE" Command="{Binding DeleteCategoryCommand}" Width="50" Height="30"/>
+        </StackPanel>
+
+        <!-- View Category Section -->
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+            <TextBlock Text="View Categories" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <ListView ItemsSource="{Binding Categories}" Width="400" Height="200" Margin="0,5">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontSize="14"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>

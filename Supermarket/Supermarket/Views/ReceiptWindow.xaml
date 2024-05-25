@@ -1,0 +1,23 @@
+﻿<Window x:Class="Supermarket.Views.ReceiptWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Supermarket.Views"
+        mc:Ignorable="d"
+        Title="ReceiptWindow" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,1,0,-1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Calendar Name="calendar"/>
+            <TextBlock Text="Cel mai mare bon al zilei selectate: " FontSize="20"/>
+        </StackPanel>
+    </Grid>
+</Window>
