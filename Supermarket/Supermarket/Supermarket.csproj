@@ -59,7 +59,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\NullToBoolConverter.cs" />
+    <Compile Include="DataService\StockDataServicecs.cs" />
     <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\Stock.cs" />
     <Compile Include="ViewModels\CategoriViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\ReceiptViewModel.cs" />

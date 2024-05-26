@@ -16,108 +16,79 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <!-- Add Stock Panel -->
         <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
             <TextBlock Text="Add Stock" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Name:" Target="{Binding ElementName=txtStock}" FontSize="16"/>
-                <TextBox Name="txtStock" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+                <Label Content="Name:" FontSize="16"/>
+                <ComboBox ItemsSource="{Binding Products}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="ID"
+                          SelectedItem="{Binding SelectedProduct}"
+                          Width="200" Margin="10" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Quantity:" Target="{Binding ElementName=txtQuantity}" FontSize="16"/>
-                <TextBox Name="txtQuantity" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+                <Label Content="Quantity:" FontSize="16"/>
+                <TextBox Text="{Binding NewStockQuantity}" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Price:" Target="{Binding ElementName=txtPrice}" FontSize="16"/>
-                <TextBox Name="txtPrice" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+                <Label Content="Price:" FontSize="16"/>
+                <TextBox Text="{Binding NewStockPrice}" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Unit:" Target="{Binding ElementName=cmbUnit}" FontSize="16"/>
-                <ComboBox Name="cmbUnit" Width="200" Margin="0,5" FontSize="16">
-                    <ComboBoxItem Content="Stock 1"/>
-                    <ComboBoxItem Content="Stock 2"/>
-                    <ComboBoxItem Content="Stock 3"/>
-                </ComboBox>
+                <Label Content="Unit:" FontSize="16"/>
+                <ComboBox ItemsSource="{Binding Units}" 
+                          SelectedItem="{Binding NewStockUnit}" 
+                          Width="200" Margin="0,5" FontSize="16"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Supply Date:" Target="{Binding ElementName=txtDate1}" FontSize="16"/>
-                <TextBox Name="txtDate1" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+                <Label Content="Supply Date:" FontSize="16"/>
+                <DatePicker SelectedDate="{Binding NewStockSupplyDate}" Margin="0,5" FontSize="16" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Expiration Date:" Target="{Binding ElementName=txtDate2}" FontSize="16"/>
-                <TextBox Name="txtDate2" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+                <Label Content="Expiration Date:" FontSize="16"/>
+                <DatePicker SelectedDate="{Binding NewStockExpirationDate}" Margin="0,5" FontSize="16" Width="250"/>
             </StackPanel>
-            <Button Content="ADD" Width="50" Height="30"/>
+            <Button Content="ADD" Width="50" Height="30" Command="{Binding AddCommand}"/>
         </StackPanel>
+
+        <!-- Edit Stock Panel -->
         <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
             <TextBlock Text="Edit Stock" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Name:" Target="{Binding ElementName=txtStockEdit}" FontSize="16"/>
-                <TextBox Name="txtStockEdit" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+                <Label Content="Name:" FontSize="16"/>
+                <ComboBox ItemsSource="{Binding Stocks}"
+                          DisplayMemberPath="ProductName"
+                          SelectedItem="{Binding SelectedStock}"
+                          Width="200" Margin="10" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Price:" Target="{Binding ElementName=txtPriceEdit}" FontSize="16"/>
-                <TextBox Name="txtPriceEdit" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+                <Label Content="Price:" FontSize="16"/>
+                <TextBox Text="{Binding SelectedStock.Pret_Vanzare}" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
             </StackPanel>
-            <Button Content="EDIT" Width="50" Height="30"/>
+            <Button Content="EDIT" Width="50" Height="30" Command="{Binding EditCommand}"/>
         </StackPanel>
+
+        <!-- Delete Stock Panel -->
         <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
             <TextBlock Text="Delete Stock" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Name:" Target="{Binding ElementName=txtStockDelete}" FontSize="16"/>
-                <TextBox Name="txtStockDelete" Text="" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
-            </StackPanel>
-            <Button Content="DELETE" Width="50" Height="30"/>
+            <ComboBox ItemsSource="{Binding Stocks}" DisplayMemberPath="ProductName" SelectedItem="{Binding SelectedStock}" Width="250" Margin="0,5" FontSize="16"/>
+            <Button Content="DELETE" Width="50" Height="30" Command="{Binding DeleteCommand}"/>
         </StackPanel>
+
+        <!-- View Stock Panel -->
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
             <TextBlock Text="View Stock" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <ListView Grid.Column="1" Grid.Row="1" Width="400" Height="200" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListViewItem>
-                    <StackPanel>
-                        <TextBlock Text="Stock 1" FontSize="14"/>
-                        <TextBlock Text="$10.00" FontSize="14"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem>
-                    <StackPanel>
-                        <TextBlock Text="Stock 2" FontSize="14"/>
-                        <TextBlock Text="$15.00" FontSize="14"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem>
-                    <StackPanel>
-                        <TextBlock Text="Stock 3" FontSize="14"/>
-                        <TextBlock Text="$20.00" FontSize="14"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem>
-                    <StackPanel>
-                        <TextBlock Text="Stock 3" FontSize="14"/>
-                        <TextBlock Text="$20.00" FontSize="14"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem>
-                    <StackPanel>
-                        <TextBlock Text="Stock 3" FontSize="14"/>
-                        <TextBlock Text="$20.00" FontSize="14"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem>
-                    <StackPanel>
-                        <TextBlock Text="Stock 3" FontSize="14"/>
-                        <TextBlock Text="$20.00" FontSize="14"/>
-                    </StackPanel>
-                </ListViewItem>
-                <ListViewItem>
-                    <StackPanel>
-                        <TextBlock Text="Stock 3" FontSize="14"/>
-                        <TextBlock Text="$20.00" FontSize="14"/>
-                    </StackPanel>
-                </ListViewItem>
+            <ListView ItemsSource="{Binding Stocks}" Width="400" Height="300" Margin="0,5">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding ProductName}" FontSize="14" Width="100"/>
+                            <TextBlock Text="{Binding Pret_Vanzare, StringFormat=\{0:C\}}" FontSize="14" Width="100"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
     </Grid>
