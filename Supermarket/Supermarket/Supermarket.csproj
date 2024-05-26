@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\DecimalToStringConverter.cs" />
     <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="DataService\StockDataServicecs.cs" />
     <Compile Include="Model\Product.cs" />

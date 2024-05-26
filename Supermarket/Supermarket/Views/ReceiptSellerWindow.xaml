@@ -3,11 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Supermarket.Views"
+        xmlns:local="clr-namespace:Supermarket.Views" xmlns:converters="clr-namespace:Supermarket.Converters"
         mc:Ignorable="d"
         Title="Receipt" Height="700" Width="1000"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converters:DecimalToStringConverter x:Key="DecimalToStringConverter"/>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Row="0" ItemsSource="{Binding ProduseAdaugate}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Nume Produs" DisplayMemberBinding="{Binding NumeProdus}" />
+                    <GridViewColumn Header="Cantitate" DisplayMemberBinding="{Binding Cantitate}" />
+                    <GridViewColumn Header="Subtotal" DisplayMemberBinding="{Binding Subtotal}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+            <ComboBox ItemsSource="{Binding Produse}" DisplayMemberPath="Name" SelectedItem="{Binding ProdusSelectat}" Width="200" Margin="5"/>
+            <TextBox Text="{Binding Cantitate, Converter={StaticResource DecimalToStringConverter}, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5" />
+            <Button Content="Add" Width="100" Margin="5" Command="{Binding AddCommand}" />
+            <Button Content="OK" Width="100" Margin="5" Command="{Binding OkCommand}" HorizontalAlignment="Right"/>
+        </StackPanel>
     </Grid>
 </Window>
