@@ -93,6 +93,24 @@ namespace Supermarket.DataService
             using (var conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
+
+                // Verificare preț de achiziție
+                decimal purchasePrice = 0;
+                var selectCmd = new SqlCommand("SELECT Pret_Achizitie FROM Stocuri WHERE ID_Stoc = @ID_Stoc", conn);
+                selectCmd.Parameters.AddWithValue("@ID_Stoc", stockId);
+                using (var reader = selectCmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        purchasePrice = reader.GetDecimal(0);
+                    }
+                }
+
+                if (newPrice < purchasePrice)
+                {
+                    throw new Exception("Selling price cannot be less than purchase price.");
+                }
+
                 var cmd = new SqlCommand("UPDATE Stocuri SET Pret_Vanzare = @Pret_Vanzare WHERE ID_Stoc = @ID_Stoc", conn);
                 cmd.Parameters.AddWithValue("@ID_Stoc", stockId);
                 cmd.Parameters.AddWithValue("@Pret_Vanzare", newPrice);

@@ -19,6 +19,7 @@ namespace Supermarket.ViewModels
         public ICommand SupplierCommand { get; }
         public ICommand ReceiptCommand { get; }
         public ICommand StockCommand { get; }
+        public ICommand ViewCommand { get; }
 
         private void OnProduct(object obj)
         {
@@ -60,6 +61,13 @@ namespace Supermarket.ViewModels
             var stockWindow = new StockWindow();
             stockWindow.DataContext = new StockViewModel();
             stockWindow.Show();
+        }
+        
+        private void OnView(object obj)
+        {
+            var viewWindow = new ViewWindow();
+            viewWindow.DataContext = new viewModel();
+            viewWindow.Show();
         }
         public AdministratorViewModel()
         {

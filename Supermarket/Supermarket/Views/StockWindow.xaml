@@ -33,8 +33,8 @@
                 <TextBox Text="{Binding NewStockQuantity}" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Price:" FontSize="16"/>
-                <TextBox Text="{Binding NewStockPrice}" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
+                <Label Content="Purchase Price:" FontSize="16"/>
+                <TextBox Text="{Binding NewStockPurchasePrice}" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Unit:" FontSize="16"/>
@@ -64,7 +64,7 @@
                           Width="200" Margin="10" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Price:" FontSize="16"/>
+                <Label Content="Selling Price:" FontSize="16"/>
                 <TextBox Text="{Binding SelectedStock.Pret_Vanzare}" Margin="0,5" Padding="5" FontSize="16" Width="250"/>
             </StackPanel>
             <Button Content="EDIT" Width="50" Height="30" Command="{Binding EditCommand}"/>

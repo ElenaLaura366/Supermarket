@@ -1,10 +1,10 @@
-﻿using Supermarket.Command;
-using Supermarket.DataService;
-using Supermarket.Model;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using Supermarket.Command;
+using Supermarket.DataService;
+using Supermarket.Model;
 
 namespace Supermarket.ViewModels
 {
@@ -60,16 +60,16 @@ namespace Supermarket.ViewModels
             }
         }
 
-        private decimal _newStockPrice;
-        public decimal NewStockPrice
+        private decimal _newStockPurchasePrice;
+        public decimal NewStockPurchasePrice
         {
-            get => _newStockPrice;
+            get => _newStockPurchasePrice;
             set
             {
-                if (_newStockPrice != value)
+                if (_newStockPurchasePrice != value)
                 {
-                    _newStockPrice = value;
-                    OnPropertyChanged(nameof(NewStockPrice));
+                    _newStockPurchasePrice = value;
+                    OnPropertyChanged(nameof(NewStockPurchasePrice));
                 }
             }
         }
@@ -157,6 +157,10 @@ namespace Supermarket.ViewModels
                     throw new Exception("Date must be between 1/1/1753 and 12/31/9999.");
                 }
 
+                // Calculare preț de vânzare
+                decimal commercialMarkUp = 0.09m;
+                decimal sellingPrice = NewStockPurchasePrice * (1 + commercialMarkUp);
+
                 var newStock = new Stock
                 {
                     ID_Produs = SelectedProduct.ID,
@@ -165,8 +169,8 @@ namespace Supermarket.ViewModels
                     Unitate_Masura = NewStockUnit,
                     Data_Aprovizionare = NewStockSupplyDate,
                     Data_Expirare = NewStockExpirationDate,
-                    Pret_Achizitie = NewStockPrice,
-                    Pret_Vanzare = NewStockPrice,
+                    Pret_Achizitie = NewStockPurchasePrice,
+                    Pret_Vanzare = sellingPrice,
                     IsActive = true
                 };
 
@@ -179,6 +183,11 @@ namespace Supermarket.ViewModels
         {
             if (SelectedStock != null)
             {
+                if (SelectedStock.Pret_Vanzare < SelectedStock.Pret_Achizitie)
+                {
+                    throw new Exception("Selling price cannot be less than purchase price.");
+                }
+
                 _dataService.UpdateStockPrice(SelectedStock.ID, SelectedStock.Pret_Vanzare);
                 LoadStocks();
             }

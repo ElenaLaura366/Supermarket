@@ -13,6 +13,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -33,6 +34,8 @@
         <Button Content="RECEIPT" Command="{Binding ReceiptCommand}" Grid.Column="2" Grid.Row="2" Width="150" Height="50"/>
 
         <Button Content="STOCK" Command="{Binding StockCommand}" Grid.Column="2" Grid.Row="3" Width="150" Height="50"/>
+        
+        <Button Content="VIEW" Command="{Binding ViewCommand}" Grid.Column="3" Grid.Row="2" Width="150" Height="50"/>
 
     </Grid>
 </Window>

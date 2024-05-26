@@ -1,0 +1,22 @@
+﻿<Window x:Class="Supermarket.Views.ProductSellerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Supermarket.Views"
+        mc:Ignorable="d"
+        Title="Product" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <RadioButton Content="Product Name" GroupName="SearchCategory" IsChecked="{Binding IsProductNameChecked}" FontSize="20" VerticalContentAlignment="Center"/>
+            <RadioButton Content="Expiration Date" GroupName="SearchCategory" IsChecked="{Binding IsExpirationDateChecked}" FontSize="20" VerticalContentAlignment="Center"/>
+            <RadioButton Content="Producer" GroupName="SearchCategory" IsChecked="{Binding IsProducerChecked}" FontSize="20" VerticalContentAlignment="Center"/>
+            <RadioButton Content="Category" GroupName="SearchCategory" IsChecked="{Binding IsCategoryChecked}" FontSize="20" VerticalContentAlignment="Center"/>
+            <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SearchTextBoxVisibility}" FontSize="20"/>
+            <DatePicker SelectedDate="{Binding ExpirationDate, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ExpirationDateVisibility}" FontSize="20"/>
+            <Button Content="Search" Command="{Binding SearchCommand}" FontSize="20"/>
+            <DataGrid ItemsSource="{Binding SearchResults}" AutoGenerateColumns="True" Height="400" FontSize="20"/>
+        </StackPanel>
+    </Grid>
+</Window>
