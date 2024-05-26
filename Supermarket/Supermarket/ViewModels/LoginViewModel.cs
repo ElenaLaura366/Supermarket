@@ -9,6 +9,7 @@ using System.ComponentModel;
 using Supermarket.Command;
 using System.Data.SqlClient;
 using Supermarket.Views;
+using Supermarket.Model;
 
 namespace Supermarket.ViewModels
 {

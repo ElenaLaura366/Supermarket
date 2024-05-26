@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="ViewModels\CategoriViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
@@ -105,7 +106,7 @@
     </Compile>
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Helpers\PasswordBoxHelper.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="ViewModels\AdministratorViewModel.cs" />
     <Compile Include="ViewModels\CasierViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
