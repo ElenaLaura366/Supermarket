@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Supermarket.Views"
         mc:Ignorable="d"
-        Title="ViewWindow" Height="450" Width="800">
+        Title="ViewWindow" Height="700" Width="600"
+        WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         
+        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ComboBox ItemsSource="{Binding Producers}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProducer}"
+                  Margin="10" HorizontalAlignment="Left" Width="200"/>
+            <ListBox Height="200">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Expander Header="{Binding Category}">
+                            <ItemsControl ItemsSource="{Binding Products}"/>
+                        </Expander>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsSource>
+                    <Binding Path="ProductsByCategory"/>
+                </ListBox.ItemsSource>
+            </ListBox>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ComboBox ItemsSource="{Binding CategoryValues}" DisplayMemberPath="Category" SelectedItem="{Binding SelectedCategory}"
+                  Margin="10" HorizontalAlignment="Left" Width="200"/>
+            <TextBlock Text="{Binding TotalValueOfSelectedCategory, StringFormat={}{0:C}}" Margin="10"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ComboBox ItemsSource="{Binding Users}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedUser}"
+                  Margin="10" HorizontalAlignment="Left" Width="200"/>
+            <DatePicker SelectedDate="{Binding SelectedDate}" Margin="10" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding TotalAmountCollected, StringFormat={}{0:C}}" Margin="10"/>
+        </StackPanel>
     </Grid>
 </Window>

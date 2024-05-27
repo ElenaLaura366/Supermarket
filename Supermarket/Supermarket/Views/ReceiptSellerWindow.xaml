@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="0" ItemsSource="{Binding ProduseAdaugate}">
+        <ListView Grid.Row="0" ItemsSource="{Binding ProduseAdaugate}" Margin="-1,0,1,0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Nume Produs" DisplayMemberBinding="{Binding NumeProdus}" />

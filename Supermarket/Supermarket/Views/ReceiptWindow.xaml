@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Supermarket.Views"
         mc:Ignorable="d"
-        Title="ReceiptWindow" Height="700" Width="1000"
+        Title="ReceiptWindow" Height="500" Width="500"
         WindowStartupLocation="CenterScreen">
     <Grid Margin="0,1,0,-1">
         <Grid.ColumnDefinitions>
@@ -16,8 +16,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Calendar Name="calendar"/>
+            <Calendar Name="calendar" SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
             <TextBlock Text="Cel mai mare bon al zilei selectate: " FontSize="20"/>
+            <TextBlock Text="{Binding MaxReceiptTotal, StringFormat={}{0:C}}" FontSize="20"/>
         </StackPanel>
     </Grid>
 </Window>

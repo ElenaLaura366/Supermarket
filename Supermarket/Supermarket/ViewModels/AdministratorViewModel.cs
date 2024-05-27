@@ -77,6 +77,7 @@ namespace Supermarket.ViewModels
             SupplierCommand = new RelayCommand(OnSupplier);
             ReceiptCommand = new RelayCommand(OnReceipt);
             StockCommand = new RelayCommand(OnStock);
+            ViewCommand = new RelayCommand(OnView);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

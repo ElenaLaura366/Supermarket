@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Windows.Input;
+using Supermarket.Model;
 
 namespace Supermarket.ViewModels
 {
@@ -161,12 +162,5 @@ namespace Supermarket.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
-
-    public class Supplier
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Country { get; set; }
     }
 }

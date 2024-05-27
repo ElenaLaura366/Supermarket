@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using Supermarket.Command;
 using Supermarket.Model;
@@ -17,7 +18,7 @@ namespace Supermarket.ViewModels
         private ObservableCollection<Product> produse;
         private Product produsSelectat;
         private decimal cantitate;
-
+        private string connectionString = "Server=DESKTOP-O046ND7;Database=Supermarket;Trusted_Connection=True;TrustServerCertificate=True;";
         public ObservableCollection<ProdusBon> ProduseAdaugate
         {
             get { return produseAdaugate; }
@@ -97,20 +98,86 @@ namespace Supermarket.ViewModels
                 }
             }
         }
+        private bool VerificaSiActualizeazaStoc(int idProdus, decimal cantitateDorita)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    string queryStoc = @"
+                        SELECT Cantitate, Data_Expirare 
+                        FROM Stocuri 
+                        WHERE ID_Produs = @IDProdus AND IsActive = 1 AND Data_Expirare >= CAST(GETDATE() AS DATE)";
+
+                    SqlCommand commandStoc = new SqlCommand(queryStoc, connection, transaction);
+                    commandStoc.Parameters.AddWithValue("@IDProdus", idProdus);
+
+                    using (SqlDataReader reader = commandStoc.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            Console.WriteLine("Stocul este inactiv sau a expirat pentru produsul selectat.");
+                            return false;
+                        }
+
+                        decimal cantitateInStoc = reader.GetDecimal(0);
+                        if (cantitateDorita > cantitateInStoc)
+                        {
+                            Console.WriteLine("Stoc insuficient pentru produsul selectat.");
+                            return false;
+                        }
+                    }
+
+                    string updateStoc = @"
+                        UPDATE Stocuri 
+                        SET Cantitate = Cantitate - @CantitateDorita 
+                        WHERE ID_Produs = @IDProdus AND IsActive = 1";
+
+                    SqlCommand updateCommand = new SqlCommand(updateStoc, connection, transaction);
+                    updateCommand.Parameters.AddWithValue("@CantitateDorita", cantitateDorita);
+                    updateCommand.Parameters.AddWithValue("@IDProdus", idProdus);
+
+                    updateCommand.ExecuteNonQuery();
+
+                    // Deactivate stock if quantity is zero
+                    string deactivateStock = @"
+                        UPDATE Stocuri 
+                        SET IsActive = 0 
+                        WHERE ID_Produs = @IDProdus AND Cantitate <= 0";
+
+                    SqlCommand deactivateCommand = new SqlCommand(deactivateStock, connection, transaction);
+                    deactivateCommand.Parameters.AddWithValue("@IDProdus", idProdus);
+                    deactivateCommand.ExecuteNonQuery();
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine($"Eroare la actualizarea stocului: {ex.Message}");
+                    return false;
+                }
+            }
+        }
 
         private void AddProdus()
         {
             if (ProdusSelectat == null || Cantitate <= 0)
             {
-                // Logica pentru a gestiona erorile de intrare
                 Console.WriteLine("Produsul nu a fost selectat sau cantitatea este invalidă.");
                 return;
             }
 
-            // Obținem prețul produsului din stocuri
-            decimal pretVanzare = 0;
-            string connectionString = "Server=DESKTOP-O046ND7;Database=Supermarket;Trusted_Connection=True;TrustServerCertificate=True;";
+            if (!VerificaSiActualizeazaStoc(ProdusSelectat.ID, Cantitate))
+            {
+                return;
+            }
 
+            decimal pretVanzare = 0;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -141,20 +208,22 @@ namespace Supermarket.ViewModels
                 Subtotal = Cantitate * pretVanzare
             });
 
-            // Resetăm cantitatea după adăugare
             Cantitate = 0;
             ProdusSelectat = null;
 
             OnPropertyChanged(nameof(ProduseAdaugate));
         }
-
         private void FinalizeazaBon()
         {
-            int idCasier = 1; // Id-ul casierului curent
+            if (!ProduseAdaugate.Any())
+            {
+                MessageBox.Show("Nu există produse adăugate pe bon pentru a finaliza.");
+                return;
+            }
+
+            int idCasier = 1;
             DateTime dataEliberare = DateTime.Now;
             decimal sumaIncasata = ProduseAdaugate.Sum(p => p.Subtotal);
-
-            string connectionString = "Server=DESKTOP-O046ND7;Database=Supermarket;Trusted_Connection=True;TrustServerCertificate=True;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -171,9 +240,9 @@ namespace Supermarket.ViewModels
 
                     int idBon = (int)insertBonCommand.ExecuteScalar();
 
-                    string insertDetaliiBonQuery = "INSERT INTO Detalii_Bon (ID_Bon, ID_Produs, Cantitate, Subtotal) VALUES (@IDBon, @IDProdus, @Cantitate, @Subtotal)";
                     foreach (var produs in ProduseAdaugate)
                     {
+                        string insertDetaliiBonQuery = "INSERT INTO Detalii_Bon (ID_Bon, ID_Produs, Cantitate, Subtotal) VALUES (@IDBon, @IDProdus, @Cantitate, @Subtotal)";
                         SqlCommand insertDetaliiBonCommand = new SqlCommand(insertDetaliiBonQuery, connection, transaction);
                         insertDetaliiBonCommand.Parameters.AddWithValue("@IDBon", idBon);
                         insertDetaliiBonCommand.Parameters.AddWithValue("@IDProdus", produs.IDProdus);
@@ -185,12 +254,14 @@ namespace Supermarket.ViewModels
 
                     transaction.Commit();
                     ProduseAdaugate.Clear();
+
+                    // Afișăm un MessageBox cu suma totală încasată
+                    MessageBox.Show($"Bonul a fost finalizat cu succes. Suma totală încasată: {sumaIncasata:C2}", "Finalizare Bon", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    // Logica de gestionare a erorilor
-                    Console.WriteLine($"A apărut o eroare: {ex.Message}");
+                    MessageBox.Show($"A apărut o eroare la finalizarea bonului: {ex.Message}", "Eroare", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 

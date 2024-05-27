@@ -63,6 +63,7 @@
     <Compile Include="DataService\StockDataServicecs.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Stock.cs" />
+    <Compile Include="Model\Supplier.cs" />
     <Compile Include="ViewModels\CategoriViewModel.cs" />
     <Compile Include="ViewModels\ProductSellerViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
